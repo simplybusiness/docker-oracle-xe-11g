@@ -12,6 +12,8 @@ docker pull simplybusiness/oracle-xe-11g
 ```
 ### Building image locally
 ```
+git clone git@github.com:simplybusiness/docker-oracle-xe-11g.git
+cd docker-oracle-xe-11g
 docker build -t simplybusiness/oracle-xe-11g:local .
 ```
 
