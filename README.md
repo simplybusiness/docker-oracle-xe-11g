@@ -1,28 +1,31 @@
 docker-oracle-xe-11g
 ============================
+(forked from [wnameless/docker-oracle-xe-11g](https://github.com/wnameless/docker-oracle-xe-11g))
 
 Oracle Express Edition 11g Release 2 on Ubuntu 16.04 LTS
 
-This **Dockerfile** is a [trusted build](https://registry.hub.docker.com/u/wnameless/oracle-xe-11g/) of [Docker Registry](https://registry.hub.docker.com/).
+This **Dockerfile** is a [trusted build](https://registry.hub.docker.com/u/simplybusiness/oracle-xe-11g/) of [Docker Registry](https://registry.hub.docker.com/).
 
 ### Installation(with Ubuntu 16.04)
 ```
-docker pull wnameless/oracle-xe-11g
+docker pull simplybusiness/oracle-xe-11g
+```
+### Building image locally
+```
+git clone git@github.com:simplybusiness/docker-oracle-xe-11g.git
+cd docker-oracle-xe-11g
+docker build -t simplybusiness/oracle-xe-11g:local .
 ```
 
-### Installation(with older Ubuntu 14.04.4)
+### Running
+Run with 22, 1521, 8080 ports opened:
 ```
-docker pull wnameless/oracle-xe-11g:14.04.4
-```
-
-Run with 22 and 1521 ports opened:
-```
-docker run -d -p 49160:22 -p 49161:1521 wnameless/oracle-xe-11g
+docker run -d -p 49160:22 -p 49161:1521 -p 49162:8080 simplybusiness/oracle-xe-11g
 ```
 
 Run this, if you want the database to be connected remotely:
 ```
-docker run -d -p 49160:22 -p 49161:1521 -e ORACLE_ALLOW_REMOTE=true wnameless/oracle-xe-11g
+docker run -d -p 49160:22 -p 49161:1521 -e ORACLE_ALLOW_REMOTE=true simplybusiness/oracle-xe-11g
 ```
 
 Connect database with following setting:
@@ -45,10 +48,26 @@ ssh root@localhost -p 49160
 password: admin
 ```
 
-Support custom DB Initialization
+Login with sqlplus installed locally
 ```
+sqlplus system/oracle@localhost:49161/xe
+```
+
+Login with sqlplus from running container
+```
+docker exec -ti <container_id> bash
+sqlplus system/oracle@localhost/xe
+```
+
+Login by Web
+```
+http://localhost:49162/apex/
+```
+
+Support custom DB Initialization
+
 # Dockerfile
-FROM wnameless/oracle-xe-11g
+FROM simplybusiness/oracle-xe-11g
 
 ADD init.sql /docker-entrypoint-initdb.d/
 ```
