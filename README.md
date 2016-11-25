@@ -48,8 +48,24 @@ ssh root@localhost -p 49160
 password: admin
 ```
 
-Support custom DB Initialization
+Login with sqlplus installed locally
 ```
+sqlplus system/oracle@localhost:49161/xe
+```
+
+Login with sqlplus from running container
+```
+docker exec -ti <container_id> bash
+sqlplus system/oracle@localhost/xe
+```
+
+Login by Web
+```
+http://localhost:49162/apex/
+```
+
+Support custom DB Initialization
+
 # Dockerfile
 FROM simplybusiness/oracle-xe-11g
 
